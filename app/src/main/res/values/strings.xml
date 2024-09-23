@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">tmdbApp</string>
+    <string name="onboarding_first_header">En Sevdiğiniz Tarzda Öneriler</string>
+    <string name="onboarding_first_content">Sizi en iyi biz tanıyoruz! Favori türlerinizi seçin ve ilginizi çekebilecek film ve dizi önerilerini size özel sunalım. Sinema dünyasında kaybolmaya hazır olun!</string>
+    <string name="onboarding_second_header">Keşfetmek İçin Sürprizlerle Dolu</string>
+    <string name="onboarding_second_content">Yeni yapımlar keşfetmek hiç bu kadar eğlenceli olmamıştı. Tarzınıza uygun popüler içeriklerin yanı sıra, gizli kalmış hazineleri de sizin için buluyoruz!</string>
+    <string name="onboarding_third_header">Kişisel İzleme Listenizi Oluşturun</string>
+    <string name="onboarding_third_content">Beğendiğiniz içerikleri izleme listenize ekleyin, favori filmlerinizi işaretleyin ve her zaman elinizin altında bir izleme rehberi olsun. İzlemek istediğiniz hiçbir yapım gözden kaçmasın!</string>
+</resources>
