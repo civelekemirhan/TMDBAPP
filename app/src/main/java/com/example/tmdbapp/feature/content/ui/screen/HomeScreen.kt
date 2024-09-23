@@ -1,5 +1,6 @@
-package com.example.tmdbapp.feature.content.ui.Screen
+package com.example.tmdbapp.feature.content.ui.screen
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -34,7 +35,7 @@ import com.example.tmdbapp.navigation.NavigationConstant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController,contentViewModel:ContentViewModel=hiltViewModel()) {
+fun HomeScreen(navController: NavController, contentViewModel: ContentViewModel = hiltViewModel()) {
 
     val state by contentViewModel.contentState.collectAsState()
 
@@ -43,35 +44,43 @@ fun HomeScreen(navController: NavController,contentViewModel:ContentViewModel=hi
         topBar = {
 
             CenterAlignedTopAppBar(
-                title = { Text(text = "Movies", fontSize = 30.sp,color=Color.White) },
+                title = { Text(text = "Movies", fontSize = 30.sp, color = Color.White) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.onSecondaryContainer
                 ),
                 actions = {
                     IconButton(onClick = { contentViewModel.onEvent(ContentEvent.ShowDialog) }) {
-                        Icon(imageVector = Icons.Outlined.Build, contentDescription = "Filter", tint = Color.White)
+                        Icon(
+                            imageVector = Icons.Outlined.Build,
+                            contentDescription = "Filter",
+                            tint = Color.White
+                        )
                     }
                 }
 
 
             )
 
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate(NavigationConstant.PROFILE_SCREEN_ROUTE_KEY) }, shape = CircleShape) {
-                Icon(imageVector = Icons.Outlined.Add, contentDescription = "Filter")
-            }
         }
     ) {
 
-        if(state.isSortTypeShowing){
-        ContentMovieTypeDialog(onEvent = contentViewModel::onEvent, state = state)
+        if (state.isSortTypeShowing) {
+            ContentMovieTypeDialog(onEvent = contentViewModel::onEvent, state = state)
         }
-        LazyColumn(modifier = Modifier.padding(it).background(MaterialTheme.colorScheme.inverseOnSurface)) {
+        LazyColumn(
+            modifier = Modifier
+                .padding(it)
+                .background(MaterialTheme.colorScheme.inverseOnSurface)
+        ) {
 
-            items(state.movies){movie->
+            items(state.movies) { movie ->
 
-                MovieItem(movie = movie)
+                MovieItem(movie = movie) {
+                    val encodedTitle = Uri.encode(movie.title)
+                    val encodedOverview = Uri.encode(movie.overview)
+                    val encodedPosterPath = Uri.encode(movie.poster_path)
+                    navController.navigate("${NavigationConstant.DETAILS_SCREEN_ROUTE_KEY}/$encodedTitle/$encodedOverview/$encodedPosterPath/${movie.vote_average.toFloat()}")
+                }
 
             }
 

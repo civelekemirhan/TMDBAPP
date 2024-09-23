@@ -13,6 +13,7 @@ data class TmdbMovie(
     val title: String,
     @SerializedName("vote_average")
     val vote_average: Double,
+
 ) {
 
 }

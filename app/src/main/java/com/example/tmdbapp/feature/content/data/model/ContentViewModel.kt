@@ -2,14 +2,11 @@ package com.example.tmdbapp.feature.content.data.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tmdbapp.feature.content.data.network.TmdbMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -18,6 +15,8 @@ import javax.inject.Inject
 class ContentViewModel @Inject constructor(
     private val contentRepository: ContentRepository
 ) : ViewModel() {
+
+
 
     private val _movieType = MutableStateFlow(MovieType.POPULAR)
     private val _movies = _movieType
@@ -31,12 +30,15 @@ class ContentViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
 
+
    private val _contentState= MutableStateFlow(TmdbMovieState())
-    val contentState= combine(_contentState,_movieType,_movies) { contentState, movieType, movies ->
-        contentState.copy(
-            movies = movies,
-            movieType = movieType
-        )
+    val contentState = combine(_contentState,_movieType,_movies) { contentState, movieType, movies ->
+
+                    contentState.copy(
+                        movies = movies,
+                        movieType = movieType
+                    )
+
     }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TmdbMovieState())
 
@@ -46,7 +48,7 @@ class ContentViewModel @Inject constructor(
              ContentEvent.SaveMovieType -> {
                 _contentState.update {
                     it.copy(
-                        movieType =contentState.value.movieType,
+                        movieType = contentState.value.movieType,
                         isSortTypeShowing = false
                     )
                 }

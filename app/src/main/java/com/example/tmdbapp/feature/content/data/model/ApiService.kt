@@ -11,13 +11,13 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("popular")
-    suspend fun getPopularMovies(@Header("Authorization") apiKey: String): TmdbResponse
+    suspend fun getPopularMovies(@Header("Authorization") apiKey: String): Response<TmdbResponse>
 
     @GET("top_rated")
-    suspend fun getTopRatedMovies(@Header("Authorization") apiKey: String): TmdbResponse
+    suspend fun getTopRatedMovies(@Header("Authorization") apiKey: String): Response<TmdbResponse>
 
     @GET("upcoming")
-    suspend fun getUpcomingMovies(@Header("Authorization") apiKey: String): TmdbResponse
+    suspend fun getUpcomingMovies(@Header("Authorization") apiKey: String): Response<TmdbResponse>
 
 
 }

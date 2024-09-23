@@ -8,5 +8,5 @@ sealed class Screen(val route:String) {
     object ForgotPass:Screen(NavigationConstant.FORGOT_PASS_SCREEN_ROUTE_KEY)
     object Home:Screen(NavigationConstant.HOME_SCREEN_ROUTE_KEY)
     object Saves:Screen(NavigationConstant.SAVES_SCREEN_ROUTE_KEY)
-    object Profile:Screen(NavigationConstant.PROFILE_SCREEN_ROUTE_KEY)
+    object Details:Screen(NavigationConstant.DETAILS_SCREEN_ROUTE_KEY)
 }

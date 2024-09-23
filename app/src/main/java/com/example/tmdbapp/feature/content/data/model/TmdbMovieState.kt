@@ -19,4 +19,8 @@ data class TmdbMovieState(
     val movieType: MovieType = MovieType.POPULAR,
 
     val isSortTypeShowing:Boolean = false,
+
+    val code:Int=200,
+
+    val errorMessage:String=""
 )

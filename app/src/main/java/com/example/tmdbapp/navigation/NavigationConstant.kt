@@ -11,7 +11,7 @@ object NavigationConstant {
     val AUTH_NAV_GRAPH_ROUTE_KEY="auth_nav_graph"
     val HOME_SCREEN_ROUTE_KEY="home_screen"
     val SAVES_SCREEN_ROUTE_KEY="saves_screen"
-    val PROFILE_SCREEN_ROUTE_KEY="profile_screen"
+    val DETAILS_SCREEN_ROUTE_KEY="details_screen"
     val CONTENT_NAV_GRAPH_ROUTE_KEY="content_nav_graph"
 
 
