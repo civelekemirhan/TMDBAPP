@@ -1,6 +1,5 @@
 package com.example.tmdbapp.feature.content.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,10 +26,10 @@ import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.example.tmdbapp.feature.content.data.model.ImageUrlConstant
-import com.example.tmdbapp.feature.content.data.network.TmdbMovie
+import com.example.tmdbapp.feature.content.data.model.TmdbMovie
 
 @Composable
-fun MovieItem(movie: TmdbMovie,onClick:()->Unit) {
+fun MovieItem(movie: TmdbMovie, onClick:()->Unit) {
 
     val context = LocalContext.current
 

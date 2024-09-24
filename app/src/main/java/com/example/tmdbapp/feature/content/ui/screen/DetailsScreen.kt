@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -43,8 +47,8 @@ fun DetailsScreen(
     poster_path: String,
     vote_average: Float
 ) {
-    
-    val context= LocalContext.current
+
+    val context = LocalContext.current
     Scaffold(topBar = {
 
         CenterAlignedTopAppBar(
@@ -55,13 +59,17 @@ fun DetailsScreen(
         )
 
     }) {
-        Column(modifier = Modifier
-            .padding(it)
-            .fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize()
+        ) {
 
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+            ) {
                 Image(
                     painter = rememberAsyncImagePainter(
                         model = "${ImageUrlConstant.IMAGE_URL_KEY_W500}/${poster_path}",
@@ -72,24 +80,52 @@ fun DetailsScreen(
                     contentScale = ContentScale.Crop
                 )
             }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = overview,
-                        fontSize = 25.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Justify
                     )
                 }
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
-                    Text(
-                        text = "Vote Average: $vote_average",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Justify)
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Column(
+                        modifier = Modifier.weight(0.5f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Vote Average: $vote_average",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Justify
+                        )
+                    }
+                    Column(
+                        modifier = Modifier.weight(0.5f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Outlined.FavoriteBorder,
+                                contentDescription = "Filter"
+                            )
+                        }
+                    }
+
                 }
 
 

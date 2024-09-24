@@ -1,7 +1,5 @@
 package com.example.tmdbapp.feature.content.data.model
 
-import com.example.tmdbapp.feature.content.data.network.TmdbMovie
-
 
 data class TmdbMovieState(
     val movies: List<TmdbMovie> = emptyList(),

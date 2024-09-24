@@ -1,42 +1,100 @@
 package com.example.tmdbapp.feature.content.data.model
 
 import com.example.tmdbapp.common.di.ConstantsDi
-import com.example.tmdbapp.feature.content.data.network.TmdbMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
 
-class ContentRepositoryImpl @Inject constructor(private val apiService: ApiService):ContentRepository {
-    override suspend fun getPopularMovies(): Flow<List<TmdbMovie>> {
+class ContentRepositoryImpl @Inject constructor(private val apiService: ApiService) :
+    ContentRepository {
+    override suspend fun getPopularMovies(): Flow<MovieResult> {
         return flow {
-            val response = apiService.getPopularMovies(ConstantsDi.BEARER_TOKEN)
-            response.body()?.results?.let { emit(it) }
-        }.flowOn(Dispatchers.IO).catch {
-            emit(emptyList())
-        }
+            var response : Response<TmdbResponse>?
+
+            try{
+                response = apiService.getPopularMovies(ConstantsDi.BEARER_TOKEN)
+                if (response.isSuccessful && response.body() != null) {
+                    response.body()?.results?.let { emit(MovieResult.Success(it)) }
+                } else {
+                    emit(
+                        MovieResult.Error(
+                            response.code(), response.message(),
+                            emptyList()
+                        )
+                    )
+                }
+            }catch(e:Exception){
+                emit(
+                    MovieResult.Error(
+                        0, "Something went wrong",
+                        emptyList()
+                    )
+                )
+            }
+
+
+        }.flowOn(Dispatchers.IO)
 
     }
 
-    override suspend fun getTopRatedMovies(): Flow<List<TmdbMovie>> {
+    override suspend fun getTopRatedMovies(): Flow<MovieResult> {
         return flow {
-            val response = apiService.getTopRatedMovies(ConstantsDi.BEARER_TOKEN)
-            response.body()?.results?.let { emit(it) }
+            var response : Response<TmdbResponse>?
 
-        }.flowOn(Dispatchers.IO).catch {
-            emit(emptyList())
-        }
+            try{
+                response = apiService.getTopRatedMovies(ConstantsDi.BEARER_TOKEN)
+                if (response.isSuccessful && response.body() != null) {
+                    response.body()?.results?.let { emit(MovieResult.Success(it)) }
+                } else {
+                    emit(
+                        MovieResult.Error(
+                            response.code(), response.message(),
+                            emptyList()
+                        )
+                    )
+                }
+            }catch(e:Exception){
+                emit(
+                    MovieResult.Error(
+                        0, "Something went wrong",
+                        emptyList()
+                    )
+                )
+            }
+
+
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getUpcomingMovies(): Flow<List<TmdbMovie>> {
+    override suspend fun getUpcomingMovies(): Flow<MovieResult> {
         return flow {
-            val response = apiService.getUpcomingMovies(ConstantsDi.BEARER_TOKEN)
-            response.body()?.results?.let { emit(it) }
-        }.flowOn(Dispatchers.IO).catch {
-            emit(emptyList())
-        }
+            var response : Response<TmdbResponse>?
+
+            try{
+                response = apiService.getUpcomingMovies(ConstantsDi.BEARER_TOKEN)
+                if (response.isSuccessful && response.body() != null) {
+                    response.body()?.results?.let { emit(MovieResult.Success(it)) }
+                } else {
+                    emit(
+                        MovieResult.Error(
+                            response.code(), response.message(),
+                            emptyList()
+                        )
+                    )
+                }
+            }catch(e:Exception){
+                emit(
+                    MovieResult.Error(
+                        0, "Something went wrong",
+                        emptyList()
+                    )
+                )
+            }
+
+
+        }.flowOn(Dispatchers.IO)
     }
 }
