@@ -18,8 +18,8 @@ interface TmdbSaveDao {
     @Query("SELECT * FROM tmdb_saves_movies ORDER BY voteAverage ASC")
     fun getMovieByVoteAverage(): Flow<List<TmdbSave>>
 
-    @Query("SELECT * FROM tmdb_saves_movies ORDER BY title ASC")
-    fun getMovieByTitle(): Flow<List<TmdbSave>>
+    @Query("SELECT * FROM tmdb_saves_movies WHERE title LIKE '%' || :searchQuery || '%' ORDER BY id ASC")
+    fun getMovieBySearchQuery(searchQuery: String): Flow<List<TmdbSave>>
 
     @Query("SELECT * FROM tmdb_saves_movies WHERE movieSortType = :movieSortType ORDER BY movieSortType ASC")
     fun getMovieBySortType(movieSortType: String): Flow<List<TmdbSave>>

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,9 +27,12 @@ import com.example.tmdbapp.feature.content.data.model.TmdbMovieState
 import com.example.tmdbapp.feature.content.data.room.MovieSavesType
 import com.example.tmdbapp.feature.content.data.room.SaveScreenEvent
 import com.example.tmdbapp.feature.content.data.room.TmdbSaveState
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun SaveScreenFilterDialog(onEvent: (SaveScreenEvent) -> Unit, state: TmdbSaveState){
+fun SaveScreenFilterDialog(searchQuery:StateFlow<String>, onEvent: (SaveScreenEvent) -> Unit, state: TmdbSaveState){
+
+    val searchQuery by searchQuery.collectAsState()
 
 
     AlertDialog(
@@ -46,35 +50,44 @@ fun SaveScreenFilterDialog(onEvent: (SaveScreenEvent) -> Unit, state: TmdbSaveSt
 
             }
         },
-        title = { Text(text = "Choose Movie Type") },
+        title = { Text(text = "Filter Saves") },
         text = {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    ) {
-                        MovieSavesType.values().forEach { movieType ->
+            Column(){
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                        ) {
+                            MovieSavesType.values().forEach { movieType ->
 
-                            Row(modifier = Modifier.clickable(
-                                onClick = {
-                                    onEvent(SaveScreenEvent.SetMovieType(movieType.name))
+                                Row(modifier = Modifier.clickable(
+                                    onClick = {
+                                        onEvent(SaveScreenEvent.SetMovieType(movieType.name))
+                                    }
+                                ),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    RadioButton(selected = state.movieSavesType == movieType.name, onClick = {
+                                        Log.d("TAG", "SaveScreenFilterDialog: ${state.movieSavesType}=${movieType.name}")
+                                        onEvent(SaveScreenEvent.SetMovieType(movieType.name))
+                                    })
+                                    Text(text = movieType.name)
                                 }
-                            ),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                RadioButton(selected = state.movieSavesType == movieType.name, onClick = {
-                                    Log.d("TAG", "SaveScreenFilterDialog: ${state.movieSavesType}=${movieType.name}")
-                                    onEvent(SaveScreenEvent.SetMovieType(movieType.name))
-                                })
-                                Text(text = movieType.name)
+
                             }
 
                         }
-
                     }
+                }
+                Column {
+                    OutlinedTextField(value = searchQuery, onValueChange = {
+                        onEvent(SaveScreenEvent.SearchMovie(it))
+                    },label={
+                        Text(text = "Anahtar kelime giriniz")
+                    })
                 }
             }
         })

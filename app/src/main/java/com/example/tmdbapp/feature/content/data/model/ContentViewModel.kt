@@ -20,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContentViewModel @Inject constructor(
-    private val contentRepository: ContentRepository
+    private val contentRepository: ContentRepository,
+    private val saveRepository: SaveRepository
 ) : ViewModel() {
 
 
@@ -54,6 +55,7 @@ class ContentViewModel @Inject constructor(
                 }
 
                 is MovieResult.Error -> {
+
                     Log.d("Movies","Movies Empty List")
                     contentState.copy(
                         movies = movies.emptyMovieList,

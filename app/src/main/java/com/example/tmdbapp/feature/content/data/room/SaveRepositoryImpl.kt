@@ -20,8 +20,8 @@ class SaveRepositoryImpl @Inject constructor(private val dao: TmdbSaveDao): Save
         return dao.getMovieByVoteAverage()
     }
 
-    override fun getMovieByTitle(): Flow<List<TmdbSave>> {
-        return dao.getMovieByTitle()
+    override fun getMovieBySearchQuery(searchQuery: String): Flow<List<TmdbSave>> {
+        return dao.getMovieBySearchQuery(searchQuery)
     }
 
     override fun getMovieBySortType(movieSavesType: String): Flow<List<TmdbSave>> {
