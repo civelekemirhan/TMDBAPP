@@ -9,18 +9,27 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +41,7 @@ import com.example.tmdbapp.common.component.authcomponent.ContentMovieTypeDialog
 import com.example.tmdbapp.feature.content.data.model.ContentEvent
 import com.example.tmdbapp.feature.content.data.model.ContentViewModel
 import com.example.tmdbapp.navigation.NavigationConstant
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,10 +67,17 @@ fun HomeScreen(navController: NavController, contentViewModel: ContentViewModel 
                         )
                     }
                 }
-
-
             )
 
+        },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(onClick = {
+                navController.navigate(NavigationConstant.SAVES_SCREEN_ROUTE_KEY)
+            },
+                shape = CircleShape) {
+                Icon(imageVector = Icons.Outlined.Favorite, contentDescription = "Favorites")
+                Text(text = "Favorites")
+            }
         }
     ) {
 
@@ -79,7 +96,8 @@ fun HomeScreen(navController: NavController, contentViewModel: ContentViewModel 
                     val encodedTitle = Uri.encode(movie.title)
                     val encodedOverview = Uri.encode(movie.overview)
                     val encodedPosterPath = Uri.encode(movie.poster_path)
-                    navController.navigate("${NavigationConstant.DETAILS_SCREEN_ROUTE_KEY}/$encodedTitle/$encodedOverview/$encodedPosterPath/${movie.vote_average.toFloat()}")
+
+                    navController.navigate("${NavigationConstant.DETAILS_SCREEN_ROUTE_KEY}/$encodedTitle/$encodedOverview/$encodedPosterPath/${movie.vote_average.toFloat()}/${state.movieType}")
                 }
 
             }
@@ -87,6 +105,7 @@ fun HomeScreen(navController: NavController, contentViewModel: ContentViewModel 
 
         }
     }
+
 
 }
 

@@ -6,7 +6,7 @@ data class TmdbSaveState(
     val voteAverage: Float = 0.0f,
     val posterPath: String = "",
     val overView: String = "",
+    val isFilterDialogShowing:Boolean = false,
     val isSaved: Boolean = false,
-    val moviewSavesType: String = MovieSavesType.ALL.name,
-
+    var movieSavesType: String = MovieSavesType.ALL.name,
 )

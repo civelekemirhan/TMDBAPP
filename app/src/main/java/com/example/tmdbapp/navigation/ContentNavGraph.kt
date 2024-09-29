@@ -25,7 +25,7 @@ fun NavGraphBuilder.HomeNavGraph(navController: NavHostController) {
         composable(route = Screen.Saves.route) {
             SavesScreen(navController)
         }
-        composable(route = "${Screen.Details.route}/{title}/{overview}/{poster_path}/{vote_average}",
+        composable(route = "${Screen.Details.route}/{title}/{overview}/{poster_path}/{vote_average}/{movie_type}",
             arguments = listOf(
                 navArgument("title"){
                     type= NavType.StringType
@@ -38,13 +38,17 @@ fun NavGraphBuilder.HomeNavGraph(navController: NavHostController) {
                 },
                 navArgument("vote_average"){
                     type= NavType.FloatType
+                },
+                navArgument("movie_type"){
+                    type= NavType.StringType
                 }
             )) {
             val title = Uri.decode(it.arguments?.getString("title") ?: "")
             val overview = Uri.decode(it.arguments?.getString("overview") ?: "")
             val poster_path = Uri.decode(it.arguments?.getString("poster_path") ?: "")
             val vote_average = it.arguments?.getFloat("vote_average") ?: 0f
-            DetailsScreen(navController, title =title, overview = overview, poster_path = poster_path, vote_average = vote_average)
+            val movie_type = it.arguments?.getString("movie_type") ?: ""
+            DetailsScreen(navController, title =title, overview = overview, poster_path = poster_path, vote_average = vote_average, movieType = movie_type)
         }
 
     }

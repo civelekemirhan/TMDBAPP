@@ -3,14 +3,19 @@ package com.example.tmdbapp.feature.content.data.model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tmdbapp.feature.content.data.room.SaveRepository
+import com.example.tmdbapp.feature.content.data.room.TmdbSave
+import com.example.tmdbapp.feature.content.data.room.TmdbSaveState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -64,6 +69,11 @@ class ContentViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TmdbMovieState())
 
 
+
+
+
+
+
     fun onEvent(event: ContentEvent) {
         when (event) {
             ContentEvent.SaveMovieType -> {
@@ -94,7 +104,6 @@ class ContentViewModel @Inject constructor(
             is ContentEvent.SetMovieType -> {
                 _movieType.value = event.movieType
             }
-
         }
     }
 

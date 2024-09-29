@@ -1,5 +1,7 @@
 package com.example.tmdbapp.feature.content.data.model
 
+import com.example.tmdbapp.feature.content.data.room.TmdbSave
+
 sealed interface ContentEvent {
 
     object SaveMovieType : ContentEvent

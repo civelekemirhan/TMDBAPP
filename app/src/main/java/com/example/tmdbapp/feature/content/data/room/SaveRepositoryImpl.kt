@@ -1,31 +1,35 @@
 package com.example.tmdbapp.feature.content.data.room
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SaveRepositoryImpl @Inject constructor(private val dao: TmdbSaveDao): SaveRepository {
     override suspend fun insertMovie(tmdbSave: TmdbSave) {
-        TODO("Not yet implemented")
+        dao.insertMovie(tmdbSave)
     }
 
     override suspend fun deleteMovie(tmdbSave: TmdbSave) {
-        TODO("Not yet implemented")
+
+        dao.deleteMovie(tmdbSave)
+
     }
 
-    override fun getAllMovie(): Flow<List<TmdbSave>> {
-        TODO("Not yet implemented")
-    }
 
     override fun getMovieByVoteAverage(): Flow<List<TmdbSave>> {
-        TODO("Not yet implemented")
+        return dao.getMovieByVoteAverage()
     }
 
     override fun getMovieByTitle(): Flow<List<TmdbSave>> {
-        TODO("Not yet implemented")
+        return dao.getMovieByTitle()
     }
 
-    override fun getMovieBySortType(): Flow<List<TmdbSave>> {
-        TODO("Not yet implemented")
+    override fun getMovieBySortType(movieSavesType: String): Flow<List<TmdbSave>> {
+       return dao.getMovieBySortType(movieSavesType)
+    }
+
+    override fun getAllMovies(): Flow<List<TmdbSave>> {
+        return dao.getAllMovie()
     }
 
 

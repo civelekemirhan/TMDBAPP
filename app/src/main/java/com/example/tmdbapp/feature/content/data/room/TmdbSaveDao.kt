@@ -15,17 +15,17 @@ interface TmdbSaveDao {
     @Delete
     suspend fun deleteMovie(tmdbSave: TmdbSave)
 
-    @Query("SELECT * FROM tmdb_movie_saves")
-    fun getAllMovie(): Flow<List<TmdbSave>>
-
-    @Query("SELECT * FROM tmdb_movie_saves ORDER BY voteAverage ASC")
+    @Query("SELECT * FROM tmdb_saves_movies ORDER BY voteAverage ASC")
     fun getMovieByVoteAverage(): Flow<List<TmdbSave>>
 
-    @Query("SELECT * FROM tmdb_movie_saves ORDER BY title ASC")
+    @Query("SELECT * FROM tmdb_saves_movies ORDER BY title ASC")
     fun getMovieByTitle(): Flow<List<TmdbSave>>
 
-    @Query("SELECT * FROM tmdb_movie_saves ORDER BY movieSortType ASC")
-    fun getMovieBySortType(): Flow<List<TmdbSave>>
+    @Query("SELECT * FROM tmdb_saves_movies WHERE movieSortType = :movieSortType ORDER BY movieSortType ASC")
+    fun getMovieBySortType(movieSortType: String): Flow<List<TmdbSave>>
+
+    @Query("SELECT * FROM tmdb_saves_movies ")
+    fun getAllMovie(): Flow<List<TmdbSave>>
 
 
 

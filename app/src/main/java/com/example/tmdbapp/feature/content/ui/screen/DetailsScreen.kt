@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,11 +34,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.example.tmdbapp.feature.content.data.model.ContentEvent
 import com.example.tmdbapp.feature.content.data.model.ImageUrlConstant
+import com.example.tmdbapp.feature.content.data.model.SaveViewModel
+import com.example.tmdbapp.feature.content.data.room.SaveScreenEvent
+import com.example.tmdbapp.navigation.NavigationConstant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,8 +51,12 @@ fun DetailsScreen(
     title: String,
     overview: String,
     poster_path: String,
-    vote_average: Float
+    vote_average: Float,
+    movieType: String
 ) {
+
+    val saveViewModel :SaveViewModel= hiltViewModel()
+
 
     val context = LocalContext.current
     Scaffold(topBar = {
@@ -55,7 +65,16 @@ fun DetailsScreen(
             title = { Text(text = title, fontSize = 30.sp, color = Color.White) },
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+            ),
+            navigationIcon = {
+                IconButton(onClick = { navController.navigate(NavigationConstant.HOME_SCREEN_ROUTE_KEY){
+                    popUpTo(NavigationConstant.DETAILS_SCREEN_ROUTE_KEY){
+                        inclusive=true
+                    }
+                } }) {
+                    Icon(imageVector = Icons.Outlined.KeyboardArrowLeft, contentDescription = "back")
+                }
+            }
         )
 
     }) {
@@ -118,7 +137,9 @@ fun DetailsScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = {
+                            saveViewModel.onEvent(SaveScreenEvent.SaveMovie(title,overview,poster_path,vote_average,movieType))
+                        }) {
                             Icon(
                                 imageVector = Icons.Outlined.FavoriteBorder,
                                 contentDescription = "Filter"

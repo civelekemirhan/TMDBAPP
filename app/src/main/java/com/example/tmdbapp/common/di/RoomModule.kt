@@ -20,7 +20,7 @@ object RoomModule {
         return Room.databaseBuilder(
             app.applicationContext,
             TmdbSavesDatabase::class.java,
-            "tmdb_saves_db"
+            "tmdb_saves_movies.db"
             ).build()
     }
 
