@@ -32,5 +32,9 @@ class SaveRepositoryImpl @Inject constructor(private val dao: TmdbSaveDao): Save
         return dao.getAllMovie()
     }
 
+    override suspend fun getMovieWithTitle(title: String): TmdbSave? {
+        return dao.getMovieWithTitle(title)
+    }
+
 
 }

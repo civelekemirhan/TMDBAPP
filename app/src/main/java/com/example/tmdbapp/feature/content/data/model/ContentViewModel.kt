@@ -7,6 +7,7 @@ import com.example.tmdbapp.feature.content.data.room.SaveRepository
 import com.example.tmdbapp.feature.content.data.room.TmdbSave
 import com.example.tmdbapp.feature.content.data.room.TmdbSaveState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
@@ -26,6 +27,7 @@ class ContentViewModel @Inject constructor(
 
 
     private val _movieType = MutableStateFlow(MovieType.POPULAR)
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val _movies = _movieType
         .flatMapLatest { movieType ->
             when (movieType) {
@@ -47,7 +49,7 @@ class ContentViewModel @Inject constructor(
 
             when (movies) {
                 is MovieResult.Success -> {
-                    Log.d("Movies","Movies List Full")
+
                     contentState.copy(
                         movies = movies.movies,
                         movieType = movieType,
@@ -56,7 +58,6 @@ class ContentViewModel @Inject constructor(
 
                 is MovieResult.Error -> {
 
-                    Log.d("Movies","Movies Empty List")
                     contentState.copy(
                         movies = movies.emptyMovieList,
                         movieType = movieType,
@@ -69,11 +70,6 @@ class ContentViewModel @Inject constructor(
 
         }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TmdbMovieState())
-
-
-
-
-
 
 
     fun onEvent(event: ContentEvent) {

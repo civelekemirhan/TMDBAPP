@@ -14,6 +14,4 @@ data class TmdbMovie(
     @SerializedName("vote_average")
     val vote_average: Double,
 
-) {
-
-}
+)

@@ -24,8 +24,11 @@ interface TmdbSaveDao {
     @Query("SELECT * FROM tmdb_saves_movies WHERE movieSortType = :movieSortType ORDER BY movieSortType ASC")
     fun getMovieBySortType(movieSortType: String): Flow<List<TmdbSave>>
 
-    @Query("SELECT * FROM tmdb_saves_movies ")
+    @Query("SELECT * FROM tmdb_saves_movies")
     fun getAllMovie(): Flow<List<TmdbSave>>
+
+    @Query("SELECT * FROM tmdb_saves_movies WHERE title = :title")
+    suspend fun getMovieWithTitle(title:String): TmdbSave?
 
 
 

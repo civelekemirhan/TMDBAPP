@@ -10,5 +10,6 @@ interface SaveRepository {
     fun getMovieBySearchQuery(searchQuery: String): Flow<List<TmdbSave>>
     fun getMovieBySortType(movieSavesType: String): Flow<List<TmdbSave>>
     fun getAllMovies(): Flow<List<TmdbSave>>
+    suspend fun getMovieWithTitle(title: String): TmdbSave?
 
 }

@@ -57,6 +57,8 @@ fun DetailsScreen(
 
     val saveViewModel :SaveViewModel= hiltViewModel()
 
+    val savedBtn=saveViewModel.savedBtnIcon(title)
+
 
     val context = LocalContext.current
     Scaffold(topBar = {
@@ -141,8 +143,9 @@ fun DetailsScreen(
                             saveViewModel.onEvent(SaveScreenEvent.SaveMovie(title,overview,poster_path,vote_average,movieType))
                         }) {
                             Icon(
-                                imageVector = Icons.Outlined.FavoriteBorder,
-                                contentDescription = "Filter"
+                                imageVector = savedBtn,
+                                contentDescription = "Filter",
+                                tint=Color.Red
                             )
                         }
                     }

@@ -102,6 +102,7 @@ fun SavesScreen(navController: NavController) {
                     val encodedOverview = Uri.encode(movie.overView)
                     val encodedPosterPath = Uri.encode(movie.posterPath)
 
+
                     navController.navigate("${NavigationConstant.DETAILS_SCREEN_ROUTE_KEY}/$encodedTitle/$encodedOverview/$encodedPosterPath/${movie.voteAverage.toFloat()}/${state.movieSavesType}")
                 }
 
